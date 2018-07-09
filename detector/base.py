@@ -35,17 +35,30 @@ class Base(object):
         """
         return self.predict(filenames=filenames, **kwargs)
 
-    def predict(self, filenames=None, **kwargs):
+    def __repr__(self):
+        return 'base.Base(verbose={})'.format(self._verbose)
+
+    def __str__(self):
+        return self.__repr__()
+
+    def predict(self, filenames=None, images=None, **kwargs):
         """Make predictions given image file paths.
 
         Arguments:
-            filenames {tuple} -- Iterable list of file paths.
+            filenames {tuple} -- Iterable containing file names or a generator
+                that yields `filenames, labels`.
 
         Returns:
             {np.ndarray} -- array-like contianing predicted values.
         """
-        # Convert filenames to images.
-        images = (utils.process_img(file) for file in filenames)
+
+        if images is None and filenames is not None:
+            # Convert filenames to images.
+            images = (utils.process_img(file) for file in filenames)
+        elif filenames is None and images is not None:
+            pass
+        else:
+            raise ValueError('Supply either `filenames` or `images`.')
 
         # Make predictions on each image.
         prediction = [self._predict(im, **kwargs) for im in images]
@@ -54,7 +67,6 @@ class Base(object):
 
     def score(self, images_or_gen, labels=None):
         data = images_or_gen if labels is None else zip(images_or_gen, labels)
-
         correct, total = 0, 0
 
         for image, label in data:

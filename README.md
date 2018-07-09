@@ -30,12 +30,15 @@ Dataset has been nicely packaged for you [here](https://dropbox.com). Copy the `
 ```sh
 > tree -L 1
 .
+├── LICENSE
 ├── README.md
 ├── cool_algorithm.py
 ├── detector
 ├── preprocessing.py
 ├── training_data
 └── utils.py
+
+3 directories, 5 files
 ```
 
 ### Command line arguments
@@ -52,6 +55,7 @@ The `--method` flag specifies which mode to run the script. `heuristics` signifi
 
 ```sh
 > python cool_algorithm.py --mode=score --method=heuristics
+> python cool_algorithm.py --mode=predict --img_path=training_data/001A0A00019C2D-0012B08-001930D-0013829-001557A00184D80015C5F.jpg
 ```
 
 ## Road map

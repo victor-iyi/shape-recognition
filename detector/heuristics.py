@@ -30,8 +30,11 @@ class Heuristics(Base):
         # Sigma for lower & upper bound threshold.
         self._sigma = kwargs.get('sigma', 0.33)
 
-        # Optimize performance.
+        # Initialize OpenCL runtime to optimize performance.
         cv2.setUseOptimized(True)
+
+    def __repr__(self):
+        return 'Heuristics(sigma={})'.format(self._sigma)
 
     def _predict(self, image, **kwargs):
         # Calculate lower threshold and upper threshold using sigma = 0.33
